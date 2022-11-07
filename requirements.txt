@@ -1,0 +1,7 @@
+PySimpleGUI
+auto-py-to-exe
+pandas
+openpyxl
+pyodbc
+PyQt6
+PySide2
