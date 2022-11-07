@@ -4,4 +4,3 @@ pandas
 openpyxl
 pyodbc
 PyQt6
-PySide2

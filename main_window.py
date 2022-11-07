@@ -1,6 +1,5 @@
 from PyQt6 import QtCore, QtGui, QtWidgets
 from PyQt6.QtWidgets import QFileDialog, QMessageBox
-from db_window import Ui_DBWindow
 from datetime import date
 from back_end import backend
 
@@ -8,11 +7,6 @@ from back_end import backend
 class Ui_MainWindow(object):
 
     ############################################################################################################
-    def openDBWindow(self):
-        self.window = QtWidgets.QMainWindow()
-        self.ui = Ui_DBWindow()
-        self.ui.setupUi(self.window)
-        self.window.show()
 
     def browse_xml(self):
         browse = QFileDialog.getOpenFileName(caption="Open file", filter="XML files (*.xml)")
@@ -23,24 +17,23 @@ class Ui_MainWindow(object):
         self.xlsx_path.setText(browse)
 
     def undisable_button(self):
-        if len(self.xml_path.text())>0 and len(self.xlsx_path.text())>0:
+        if len(self.xml_path.text()) > 0 and len(self.xlsx_path.text()) > 0:
             self.export_button.setDisabled(False)
 
-
     def export(self):
-            xml_path = self.xml_path.text()
-            xlsx_path = self.xlsx_path.text()
-            if self.xlsx_name.text() != '':
-                xlsx_path = f'{xlsx_path}/{self.xlsx_name.text()}.xlsx'
-            else:
-                xlsx_path = f'{xlsx_path}/Invoices_{date.today()}.xlsx'
+        xml_path = self.xml_path.text()
+        xlsx_path = self.xlsx_path.text()
+        if self.xlsx_name.text() != '':
+            xlsx_path = f'{xlsx_path}/{self.xlsx_name.text()}.xlsx'
+        else:
+            xlsx_path = f'{xlsx_path}/Invoices_{date.today()}.xlsx'
 
-            backend(xlsx_path, xml_path)
+        backend(xlsx_path, xml_path)
 
-            msg_box = QMessageBox()
-            msg_box.setWindowTitle("Բարեհաջող ավարտ")
-            msg_box.setText("Դուք բարեհաջող արտահանեցիք excel ֆայլը։")
-            button = msg_box.exec()
+        msg_box = QMessageBox()
+        msg_box.setWindowTitle("Բարեհաջող ավարտ")
+        msg_box.setText("Դուք բարեհաջող արտահանեցիք excel ֆայլը։")
+        button = msg_box.exec()
 
     ############################################################################################################
     def setupUi(self, MainWindow):
@@ -56,8 +49,8 @@ class Ui_MainWindow(object):
         MainWindow.setMaximumSize(QtCore.QSize(600, 340))
         icon = QtGui.QIcon()
         icon.addPixmap(QtGui.QPixmap(
-            "C:\\Users\\hayk.asatryan\\Desktop\\Haik\\pythonprojects\\eInvoiceToExcel\\ui\\../Untergunter-Leaf-Mimes-Text-xml.ico"),
-                       QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
+            "Untergunter-Leaf-Mimes-Text-xml.ico"),
+            QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
         MainWindow.setWindowIcon(icon)
         MainWindow.setStyleSheet("QMainWindow{\n"
                                  "background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(166, 206, 57, 255), stop:1 rgba(255, 255, 255, 255));\n"
@@ -86,7 +79,7 @@ class Ui_MainWindow(object):
         self.horizontalLayout_4.setObjectName("horizontalLayout_4")
         self.xml_path = QtWidgets.QLineEdit(self.verticalLayoutWidget)
 
-        self.xml_path.textChanged.connect(lambda: self.undisable_button()) # signal to function
+        self.xml_path.textChanged.connect(lambda: self.undisable_button())  # signal to function
 
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Expanding, QtWidgets.QSizePolicy.Policy.Fixed)
         sizePolicy.setHorizontalStretch(15)
@@ -200,13 +193,6 @@ class Ui_MainWindow(object):
         self.statusbar = QtWidgets.QStatusBar(MainWindow)
         self.statusbar.setObjectName("statusbar")
         MainWindow.setStatusBar(self.statusbar)
-        self.db_path_action = QtGui.QAction(MainWindow)
-
-        self.db_path_action.triggered.connect(lambda: self.openDBWindow())  # signal to next window
-
-        self.db_path_action.setObjectName("db_path_action")
-        self.menu.addAction(self.db_path_action)
-        self.menubar.addAction(self.menu.menuAction())
 
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
@@ -220,8 +206,6 @@ class Ui_MainWindow(object):
         self.xlsx_browse_button.setText(_translate("MainWindow", "Փնտրել"))
         self.xlsx_name_label.setText(_translate("MainWindow", "Գրեք արտահանվող excel-ի անունը /optional/"))
         self.export_button.setText(_translate("MainWindow", "Արտահանել excel ֆայլը"))
-        self.menu.setTitle(_translate("MainWindow", "Կարգավորումներ"))
-        self.db_path_action.setText(_translate("MainWindow", "ՀԾ հաճախորդների ուղի"))
 
 
 if __name__ == "__main__":
